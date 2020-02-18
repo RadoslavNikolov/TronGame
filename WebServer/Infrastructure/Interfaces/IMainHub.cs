@@ -18,11 +18,6 @@ namespace WebServer.Infrastructure.Interfaces
         Task GameRemoved(Guid game);
         Task GameStart(GameShortModel game);
         Task GameTicked(Guid gameUid, int tickCounter, PlayerShortModel p1, PlayerShortModel p2, IEnumerable<PointDetailsModel> p1Points, IEnumerable<PointDetailsModel> p2Points);
-
-        Task QuestionAdded(Question question);
-        Task QuestionScoreChange(Guid questionId, int score);
-        Task AnswerCountChange(Guid questionId, int answerCount);
-        Task AnswerAdded(Answer answer);
         Task LiveChatMessageReceived(string username, string message);
     }
 }

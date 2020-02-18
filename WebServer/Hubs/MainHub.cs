@@ -98,16 +98,6 @@ namespace WebServer.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameUid.ToString());
         }
 
-        public async Task JoinQuestionGroup(Guid questionId)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, questionId.ToString());
-        }
-
-        public async Task LeaveQuestionGroup(Guid questionId)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, questionId.ToString());
-        }
-
         public async Task SendLiveChatMessage(string message)
         {
             await Clients.All.LiveChatMessageReceived(Context.UserIdentifier, message);

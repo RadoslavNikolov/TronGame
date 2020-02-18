@@ -36,18 +36,9 @@ namespace WebServer.Controllers
         [HttpGet()]
         public async Task<IEnumerable> GetGames()
         {
-            try
-            {
-                var list = (await _service.AvailableGames()).ToList();
+            var list = (await _service.AvailableGames()).ToList();
 
-                return list;
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            return list;
         }
 
         [HttpGet("getById")]
