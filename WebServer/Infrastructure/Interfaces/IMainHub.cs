@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Tron.Services.Models;
+using Tron.Services.Models.GameEngine;
+using WebServer.Models;
+
+namespace WebServer.Infrastructure.Interfaces
+{
+    public interface IMainHub
+    {
+        Task GamePlayerJoin(Guid gameUid, Player player1, Player player2);
+        Task GamePlayerLeave(Guid gameUid, string leaving, Player player1, Player player2);
+
+        Task GameAdded(GameManagementViewModel game);
+        Task GameJoined(GameManagementViewModel game);
+
+        Task GameRemoved(Guid game);
+        Task GameStart(GameShortModel game);
+        Task GameTicked(Guid gameUid, int tickCounter, PlayerShortModel p1, PlayerShortModel p2, IEnumerable<PointShortModel> p1Points, IEnumerable<PointShortModel> p2Points);
+
+        Task QuestionAdded(Question question);
+        Task QuestionScoreChange(Guid questionId, int score);
+        Task AnswerCountChange(Guid questionId, int answerCount);
+        Task AnswerAdded(Answer answer);
+        Task LiveChatMessageReceived(string username, string message);
+    }
+}
