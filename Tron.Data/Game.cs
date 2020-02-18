@@ -19,6 +19,7 @@ namespace Tron.Data
         public byte GameLevel { get; set; }
         public byte Size { get; set; }
         public string GameUid { get; set; }
+        public bool Finished { get; set; }
 
         public virtual ICollection<Chat> Chat { get; set; }
         public virtual ICollection<GamePlayer> GamePlayer { get; set; }

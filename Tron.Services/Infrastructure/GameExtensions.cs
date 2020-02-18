@@ -36,14 +36,15 @@ namespace Tron.Services.Infrastructure
                 };
         }
 
-        public static PointShortModel ToShortModel(this Point p)
+        public static PointDetailsModel ToDetailsModel(this Point p)
         {
             return p == null
                 ? null
-                : new PointShortModel
+                : new PointDetailsModel
                 {
                     X = p.X,
-                    Y = p.Y
+                    Y = p.Y,
+                    IsHead = p.IsHead
                 };
         }
 

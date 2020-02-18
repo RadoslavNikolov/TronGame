@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Tron.Services.Models;
 using Tron.Services.Models.GameEngine;
-namespace WebServer.Models
+
+namespace WebServer.Infrastructure
 {
     public class GameState
     {
-        private static readonly Lazy<GameState> _instance = 
+        private static readonly Lazy<GameState> _instance =
             new Lazy<GameState>(() => new GameState(), true);
 
-        private readonly ConcurrentDictionary<Guid, GameModel> games = 
+        private readonly ConcurrentDictionary<Guid, GameModel> games =
             new ConcurrentDictionary<Guid, GameModel>();
 
         private readonly object _myLock;
-        
+
         private GameState()
         {
             _myLock = new object();
@@ -29,7 +30,7 @@ namespace WebServer.Models
             items = new ConcurrentBag<T>(items?.Except(new[] { itemToRemo }));
         }
 
-        public GameModel GameJoin(string connectionId, Guid gameUid, 
+        public GameModel GameJoin(string connectionId, Guid gameUid,
             string player, int playerNum, GameManagementViewModel persGame)
         {
             games.TryGetValue(gameUid, out GameModel game);
@@ -39,8 +40,8 @@ namespace WebServer.Models
                 game = new GameModel
                 {
                     GameUid = gameUid,
-                    Level = persGame?.GameLevel??1,
-                    Size = persGame?.Size??1
+                    Level = persGame?.GameLevel ?? 1,
+                    Size = persGame?.Size ?? 1
                 };
 
                 games[gameUid] = game;
@@ -67,7 +68,7 @@ namespace WebServer.Models
             return game;
         }
 
-        public (bool isDeleted , GameModel game) GameLeave(Guid gameUid, string player, int playerNum)
+        public (bool isDeleted, GameModel game) GameLeave(Guid gameUid, string player, int playerNum)
         {
             games.TryGetValue(gameUid, out GameModel game);
             if (game == null)
@@ -114,7 +115,7 @@ namespace WebServer.Models
                 game.Player1?.AddToTheHead();
                 game.Player2?.AddToTheHead();
 
-                if (game.TickCounter % (100 / (game.Level <= 0 ? 1 : game.Level)) == 0)
+                if (game.TickCounter % (50 / (game.Level <= 0 ? 1 : game.Level)) == 0)
                 {
                     game.Player1?.AddToTheHead();
                     game.Player2?.AddToTheHead();

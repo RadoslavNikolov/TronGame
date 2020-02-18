@@ -9,5 +9,9 @@ namespace Tron.Services.Models.GameEngine
         public int Y { get; set; }
 
         public Direction Direction { get; set; }
+
+        public int ElementSize { get; set; }
+
+        public bool IsHead { get; set; }
     }
 }

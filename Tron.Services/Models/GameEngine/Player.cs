@@ -28,7 +28,7 @@ namespace Tron.Services.Models.GameEngine
             Random rnd = new Random();
             var direction = (Direction)rnd.Next(1,4);
             _direction = direction;
-            _points.AddFirst(new Point { X = rnd.Next(0, 600 / _elementSize), Y = rnd.Next(0, 400 / _elementSize), Direction = direction });
+            _points.AddFirst(new Point { X = rnd.Next(0, (600 / _elementSize) - _elementSize), Y = rnd.Next(0, (400 / _elementSize) - _elementSize), Direction = direction, ElementSize = _elementSize });
 
         }
         /// <summary>
@@ -102,7 +102,7 @@ namespace Tron.Services.Models.GameEngine
             lock (_myPointsLock)
             {
                 var first = _points.First;
-                Point point = new Point { Direction = _direction };
+                Point point = new Point { Direction = _direction , ElementSize = _elementSize};
                 switch (point.Direction)
                 {
                     case Direction.Up:
@@ -145,7 +145,7 @@ namespace Tron.Services.Models.GameEngine
             lock (_myPointsLock)
             {
                 var last = _points.Last;
-                Point point = new Point { Direction = last.Value.Direction };
+                Point point = new Point { Direction = last.Value.Direction, ElementSize = _elementSize };
                 switch (last.Value.Direction)
                 {
                     case Direction.Up:
@@ -172,11 +172,11 @@ namespace Tron.Services.Models.GameEngine
             }
         }
 
-        public IEnumerable<PointShortModel> GetPoints()
+        public IEnumerable<PointDetailsModel> GetPoints()
         {
             lock (_myPointsLock)
             {
-                return _points.ToArray().Select(x => x.ToShortModel()).AsEnumerable();
+                return _points.ToArray().Select(x => x.ToDetailsModel()).AsEnumerable();
             }
         }
     }

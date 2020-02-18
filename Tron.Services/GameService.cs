@@ -23,6 +23,7 @@ namespace Tron.Services
                 .AsNoTracking()
                 .Include(x => x.GamePlayer)
                 .Where(x => x.CanceledBy == null
+                    && !x.Finished
                     && x.GamePlayer.Count < 2)
                 .ToListAsync())
                 .Select(x => x.ToViewModel())
