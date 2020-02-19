@@ -33,6 +33,19 @@ namespace WebServer.Hubs
             var game = GameState.Instance.Tick(gameUid);
             if (game != null)
             {
+
+                if (game.Player1?.OutOfTheBoundaries??false)
+                {
+                    await _service.GameOverAsync(gameUid, game.Player2?.Name, game.Level * 10);
+                    await Clients.Group(gameUid.ToString()).GameOver(gameUid, game.Player2?.Name, game.Level * 10);
+                }
+
+                if (game.Player2?.OutOfTheBoundaries??false)
+                {
+                     await _service.GameOverAsync(gameUid, game.Player1?.Name, game.Level * 10);
+                     await Clients.Group(gameUid.ToString()).GameOver(gameUid, game.Player1?.Name, game.Level * 10);
+                }
+
                 var p1 = game.Player1.ToShortModel();
                 var p2 = game.Player2.ToShortModel();
 
@@ -60,6 +73,11 @@ namespace WebServer.Hubs
             {
                 await Clients.Group(gameUid.ToString()).GameStart(game.ToShortModel());
             }
+        }
+
+        public void OutOfTheBoundaries(Guid gameUid, string player, int playerNum)
+        {
+            var game = GameState.Instance.OutOfTheBoundaries(gameUid, player, playerNum);
         }
 
         public async Task GameLeave(Guid gameUid, string player, int playerNum)

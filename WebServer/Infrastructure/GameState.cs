@@ -128,5 +128,28 @@ namespace WebServer.Infrastructure
 
             return game;
         }
+
+        public GameModel OutOfTheBoundaries(Guid gameUid, string player, int playerNum)
+        {
+            games.TryGetValue(gameUid, out GameModel game);
+            if (game == null)
+            {
+                //Todo
+            }
+
+            lock (_myLock)
+            {
+                if (playerNum == 1 && game.Player1 != null)
+                {
+                    game.Player1.OutOfTheBoundaries = true;
+                }
+                else if(game.Player2 != null)
+                {
+                    game.Player2.OutOfTheBoundaries = true;
+                }
+            }
+
+            return game;
+        }
     }
 }

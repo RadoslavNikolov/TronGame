@@ -167,5 +167,32 @@ namespace Tron.Services
 
             return game;
         }
+
+        public async Task<Game> GameOverAsync(Guid gameUid, string winner, int score)
+        {
+            var game = await GetGameByUidAsync(gameUid);
+            if (game == null)
+            {
+                //Todo
+                return null;
+            }
+
+            if (game.Finished)
+            {
+                //Todo: already finished
+                return null;
+            }
+
+            game.Finished = true;
+            var player = game.GamePlayer.FirstOrDefault(x => x.Name.Equals(winner, StringComparison.OrdinalIgnoreCase));
+            if (player != null)
+            {
+                player.IsWinner = true;
+                player.Score = score;
+            }
+
+            await _context.SaveChangesAsync();
+            return game;
+        }
     }
 }

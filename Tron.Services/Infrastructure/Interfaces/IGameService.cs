@@ -28,5 +28,7 @@ namespace Tron.Services.Infrastructure.Interfaces
         Task<Game> JoinAsync(Guid gameUid, string user);
 
         Task<Game> LeaveGameAsync(Guid gameUid, string user);
+
+        Task<Game> GameOverAsync(Guid gameUid, string winner, int score);
     }
 }

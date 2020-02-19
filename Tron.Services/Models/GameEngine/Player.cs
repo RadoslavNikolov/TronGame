@@ -26,9 +26,9 @@ namespace Tron.Services.Models.GameEngine
             _elementSize = elementSize;
 
             Random rnd = new Random();
-            var direction = (Direction)rnd.Next(1,4);
+            var direction = (Direction)rnd.Next(1, 4);
             _direction = direction;
-            _points.AddFirst(new Point { X = rnd.Next(0, (600 / _elementSize) - _elementSize), Y = rnd.Next(0, (400 / _elementSize) - _elementSize), Direction = direction, ElementSize = _elementSize });
+            _points.AddFirst(new Point { X = rnd.Next(40, (600 / _elementSize) - _elementSize), Y = rnd.Next(40, (400 / _elementSize) - _elementSize), Direction = direction, ElementSize = _elementSize });
 
         }
         /// <summary>
@@ -46,55 +46,55 @@ namespace Tron.Services.Models.GameEngine
         /// </summary>
         public string ConnectionId { get; set; }
 
+        public bool OutOfTheBoundaries { get; set; }
+
         public Direction Direction => _direction;
 
         public void SetDirection(string direction)
         {
             lock (_myDirectionLock)
             {
-                if (direction.Equals("right", StringComparison.OrdinalIgnoreCase))
+                // Current player direction
+                switch (_direction)
                 {
-                    switch (_direction)
-                    {
-                        case Direction.Up:
-                            _direction = Direction.Right;
-                            break;
-                        case Direction.Right:
-                            _direction = Direction.Down;
-                            break;
-                        case Direction.Down:
-                            _direction = Direction.Left;
-                            break;
-                        case Direction.Left:
-                            _direction = Direction.Up;
-                            break;
-                        default:
-                            break;
-                    }
-
-                }
-                else
-                {
-                    switch (_direction)
-                    {
-                        case Direction.Up:
-                            _direction = Direction.Left;
-                            break;
-                        case Direction.Right:
-                            _direction = Direction.Up;
-                            break;
-                        case Direction.Down:
-                            _direction = Direction.Right;
-                            break;
-                        case Direction.Left:
-                            _direction = Direction.Down;
-                            break;
-                        default:
-                            break;
-                    }
+                    case Direction.Up:
+                    case Direction.Down:
+                        //Pressed button diection
+                        switch (direction)
+                        {
+                            case "left":
+                                _direction = Direction.Left;
+                                break;
+                            case "right":
+                                _direction = Direction.Right;
+                                break;
+                            case "up":
+                            case "down":
+                            default:
+                                break;
+                        }
+                        break;
+                    case Direction.Right:
+                    case Direction.Left:
+                        //Pressed button diection
+                        switch (direction)
+                        {
+                            case "up":
+                                _direction = Direction.Up;
+                                break;
+                            case "down":
+                                _direction = Direction.Down;
+                                break;
+                            case "left":
+                            case "right":
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
-            //Todo: Comes left ot tight string
         }
 
         public void AddToTheHead()
@@ -102,7 +102,7 @@ namespace Tron.Services.Models.GameEngine
             lock (_myPointsLock)
             {
                 var first = _points.First;
-                Point point = new Point { Direction = _direction , ElementSize = _elementSize};
+                Point point = new Point { Direction = _direction, ElementSize = _elementSize };
                 switch (point.Direction)
                 {
                     case Direction.Up:
