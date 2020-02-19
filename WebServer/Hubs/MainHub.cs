@@ -55,6 +55,16 @@ namespace WebServer.Hubs
             }
         }
 
+        public async Task PauseGame(Guid gameUid, string player)
+        {        
+            await Clients.Group(gameUid.ToString()).GamePaused(gameUid, $"\"{player}\" paused the game!");      
+        }
+
+        public async Task ResumeGame(Guid gameUid, string player)
+        {        
+            await Clients.Group(gameUid.ToString()).GameResumed(gameUid, $"\"{player}\" resumed the game!");      
+        }
+
         public void PlayerMove(Guid gameUid, int playerNum, string direction)
         {
             GameState.Instance.PlayerMove(gameUid, playerNum, direction);
