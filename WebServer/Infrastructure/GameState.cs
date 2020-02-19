@@ -115,7 +115,7 @@ namespace WebServer.Infrastructure
                 game.Player1?.AddToTheHead();
                 game.Player2?.AddToTheHead();
 
-                if (game.TickCounter % (50 / (game.Level <= 0 ? 1 : game.Level)) == 0)
+                if (game.TickCounter % (30 / (game.Level <= 0 ? 1 : game.Level)) == 0)
                 {
                     game.Player1?.AddToTheHead();
                     game.Player2?.AddToTheHead();
