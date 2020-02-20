@@ -126,9 +126,16 @@ namespace WebServer.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameUid.ToString());
         }
 
-        public async Task SendLiveChatMessage(string message)
+        public async Task SendLiveChatMessage(string message, Guid? gameUid)
         {
-            await Clients.All.LiveChatMessageReceived(Context.UserIdentifier, message);
+            if (gameUid != null)
+            {
+                 await Clients.Group(gameUid.ToString()).LiveChatMessageReceived(Context.UserIdentifier, message);
+            }
+            else
+            {
+                await Clients.All.LiveChatMessageReceived(Context.UserIdentifier, message);
+            }
         }
     }
 }
