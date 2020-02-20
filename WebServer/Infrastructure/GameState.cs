@@ -37,17 +37,17 @@ namespace WebServer.Infrastructure
 
             if (game == null)
             {
-                game = new GameModel
+                game = new GameModel(persGame.PlayerSize??8, persGame.Size, persGame.Size)
                 {
                     GameUid = gameUid,
                     Level = persGame?.GameLevel ?? 1,
-                    Size = persGame?.Size ?? 1
+                    Size = persGame?.Size ?? 800
                 };
 
                 games[gameUid] = game;
             }
 
-            var p = new Player(game.ElementSize)
+            var p = new Player(playerNum, game.ElementSize)
             {
                 Name = player,
                 ConnectionId = connectionId,

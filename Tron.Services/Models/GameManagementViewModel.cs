@@ -12,6 +12,7 @@ namespace Tron.Services.Models
         public Guid GameUid { get; set; }
         public string Note { get; set; }
         public byte GameLevel { get; set; }
-        public byte Size { get; set; }
+        public int Size { get; set; }
+        public byte? PlayerSize { get; set; }
     }
 }

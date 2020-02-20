@@ -164,8 +164,6 @@ namespace Tron.Data
                     .HasMaxLength(450);
 
                 entity.Property(e => e.Name).HasMaxLength(1000);
-
-                entity.Property(e => e.Size).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<GamePlayer>(entity =>

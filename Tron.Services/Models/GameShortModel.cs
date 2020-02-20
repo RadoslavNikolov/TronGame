@@ -8,7 +8,7 @@ namespace Tron.Services.Models
     {
         public byte Level { get; set; }
 
-        public byte Size { get; set; }
+        public int Size { get; set; }
 
         public int Width { get; set; }
 

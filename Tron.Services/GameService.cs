@@ -71,14 +71,11 @@ namespace Tron.Services
 
         public async Task<Game> CreateGameAsync(GameManagementModel model, string user)
         {
-            var entity = new Game
+            var entity = model.ToGame();
+            if (entity == null)
             {
-                Name = model.Name,
-                Note = model.Note,
-                GameLevel = model.GameLevel,
-                Size = model.Size <= 0 ? (byte)1 : model.Size,
-                GameUid = Guid.NewGuid().ToString()
-            };
+                throw new ArgumentNullException();
+            }
 
             entity.GamePlayer.Add(new GamePlayer
             {

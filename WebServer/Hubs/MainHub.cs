@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Tron.Services.Infrastructure;
 using Tron.Services.Infrastructure.Interfaces;
 using Tron.Services.Models;
-using Tron.Services.Models.GameEngine;
 using WebServer.Infrastructure;
 using WebServer.Infrastructure.Interfaces;
 

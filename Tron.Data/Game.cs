@@ -17,9 +17,10 @@ namespace Tron.Data
         public string Note { get; set; }
         public string CanceledBy { get; set; }
         public byte GameLevel { get; set; }
-        public byte Size { get; set; }
+        public int Size { get; set; }
         public string GameUid { get; set; }
         public bool Finished { get; set; }
+        public byte? PlayerSize { get; set; }
 
         public virtual ICollection<Chat> Chat { get; set; }
         public virtual ICollection<GamePlayer> GamePlayer { get; set; }

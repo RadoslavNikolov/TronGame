@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tron.Data;
@@ -36,7 +37,7 @@ namespace WebServer.Controllers
         [HttpGet()]
         public async Task<IEnumerable> GetGames()
         {
-            var list = (await _service.AvailableGames()).ToList();
+            List<GameManagementViewModel> list = (await _service.AvailableGames()).ToList();
 
             return list;
         }
@@ -60,7 +61,7 @@ namespace WebServer.Controllers
             var user = User.Identity.Name;
 
             var entity = await _service.CreateGameAsync(model, user);
-            var viewModel = entity.ToViewModel();
+            GameManagementViewModel viewModel = entity.ToViewModel();
             games.Add(viewModel);
 
             await _hubContext.Clients.All.GameAdded(viewModel);
@@ -76,7 +77,7 @@ namespace WebServer.Controllers
             try
             {
                 var game = await _service.JoinAsync(gameUid, User.Identity.Name);
-                var viewModel = game.ToViewModel();
+                GameManagementViewModel viewModel = game.ToViewModel();
 
                 await _hubContext.Clients.All.GameJoined(viewModel);
 

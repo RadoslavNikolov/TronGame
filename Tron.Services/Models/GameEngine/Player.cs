@@ -17,7 +17,7 @@ namespace Tron.Services.Models.GameEngine
         private readonly object _myDirectionLock;
         private readonly object _myPointsLock;
 
-        public Player(int elementSize = 4)
+        public Player(int playerNum, int elementSize = 4)
         {
             _myDirectionLock = new object();
             _myPointsLock = new object();
@@ -26,9 +26,12 @@ namespace Tron.Services.Models.GameEngine
             _elementSize = elementSize;
 
             Random rnd = new Random();
-            var direction = (Direction)rnd.Next(1, 4);
+            var direction = playerNum == 1 ? Direction.Down : Direction.Up;
             _direction = direction;
-            _points.AddFirst(new Point { X = rnd.Next(40, (600 / _elementSize) - _elementSize), Y = rnd.Next(40, (400 / _elementSize) - _elementSize), Direction = direction, ElementSize = _elementSize });
+           //_points.AddFirst(new Point { X = rnd.Next(20, (600 / _elementSize) - _elementSize), Y = rnd.Next(20, (500 / _elementSize) - _elementSize), Direction = direction, ElementSize = _elementSize });
+           _points.AddFirst(new Point { X = playerNum == 1 ? 5 : 35, Y = playerNum == 1 ? 5 : 35 , Direction = direction, ElementSize = _elementSize });
+            AddToTheTail();
+            AddToTheTail();
 
         }
         /// <summary>
@@ -101,6 +104,11 @@ namespace Tron.Services.Models.GameEngine
         {
             lock (_myPointsLock)
             {
+                //if (_points.Count > 100)
+                //{
+                //    return;
+                //}
+
                 var first = _points.First;
                 Point point = new Point { Direction = _direction, ElementSize = _elementSize };
                 switch (point.Direction)

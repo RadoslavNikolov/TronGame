@@ -14,7 +14,7 @@ namespace Tron.Services.Models.GameEngine
         /// <summary>
         /// Initializes a new instance of the <see cref="GameModel"/> class.
         /// </summary>
-        public GameModel(int elementSize = 8, int width = 800, int height = 600)
+        public GameModel(byte elementSize = 8, int width = 800, int height = 600)
         {
             _elementSize = elementSize;
             _tickCounter = 0;
@@ -42,7 +42,7 @@ namespace Tron.Services.Models.GameEngine
 
         public byte Level { get; set; }
 
-        public byte Size { get; set; }
+        public int Size { get; set; }
 
         public int Width { get; set; }
 
