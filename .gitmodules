@@ -1,0 +1,6 @@
+[submodule "TronGame"]
+	path = TronGame
+	url = https://github.com/RadoslavNikolov/TronGame.git
+[submodule "client"]
+	path = client
+	url = https://github.com/RadoslavNikolov/TronGame.git
