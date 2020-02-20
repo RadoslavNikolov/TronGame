@@ -47,6 +47,7 @@ namespace WebServer
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+
             services.AddCors();
 
             // Sets the default scheme to cookies
@@ -145,6 +146,8 @@ namespace WebServer
 
             app.UseRouting();
 
+            app.UseStaticFiles();
+
             app.UseAuthentication();
 
             // Register SignalR hubs
@@ -159,6 +162,9 @@ namespace WebServer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
