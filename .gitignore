@@ -4,7 +4,11 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 appsettings.json
+<<<<<<< HEAD
 ScaffoldCommand.txt
+=======
+ScaffoldCommand.sql
+>>>>>>> cc778f1c3290fad9e3ae12897eb65072e9b6d8b8
 
 # User-specific files
 *.rsuser
@@ -351,4 +355,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+<<<<<<< HEAD
 /ScaffoldCommand.sql
+=======
+>>>>>>> cc778f1c3290fad9e3ae12897eb65072e9b6d8b8
