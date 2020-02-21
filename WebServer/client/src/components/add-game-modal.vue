@@ -63,7 +63,7 @@ export default {
         name: '',
         note: '',
         gameLevel: 1,
-        arenaSize: 800,
+        arenaSize: 700,
         playerSize: 10
       },
       working: false

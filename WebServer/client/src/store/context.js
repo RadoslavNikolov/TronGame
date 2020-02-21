@@ -31,8 +31,8 @@ const store = {
       { value: 3, text: 'Hard' }
     ],
     arenaSizeOptions: [
-      { value: 600, text: 'Small' },
-      { value: 800, text: 'Medium' },
+      { value: 500, text: 'Small' },
+      { value: 700, text: 'Medium' },
       { value: 1000, text: 'Large' }
     ],
     playerSizeOptions: [

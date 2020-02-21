@@ -24,6 +24,9 @@ class GameService{
 
     draw(provider, game, player1, player2, elementSize){
         const ctx = provider.context;
+        if(!ctx){
+            return;
+        }
                 
         ctx.clearRect(0,0, game.width, game.height);
 

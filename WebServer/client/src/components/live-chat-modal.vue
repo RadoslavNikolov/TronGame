@@ -1,9 +1,8 @@
 <template>
-  <b-modal id="liveChatModal" ref="liveChatModal" hide-footer title="Live Chat" size="lg" 
+  <b-modal id="liveChatModal" ref="liveChatModal" hide-footer title="Live Chat" size="xl" 
     @hidden="onHidden"
     @hide="onHide"
     @show="onShow">
-    {{currentGameUid}}
     <div class="bg-light messages-container">
       <ul v-if="filteredMessages.length" class="list-unstyled container">
         <li v-for="(message, index) in filteredMessages" :key="index" class="row my-2">
@@ -12,7 +11,7 @@
         </li>
       </ul>
       <p v-else class="text-muted text-center">
-        Welcome to the chat...<br />
+        Welcome...<br />
         Say hi!
       </p>
     </div>

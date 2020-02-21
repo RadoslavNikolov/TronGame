@@ -1,7 +1,7 @@
 <template>
     <div v-cloak>
         <div class="text-center">
-            <div><span :class=avatarClass><i class="fas fa-user-circle fa-5x"></i></span></div>
+            <div><span :class=avatarClass><i class="fas fa-user-circle fa-3x"></i></span></div>
             <h5>{{model.userEmail}}</h5>
         </div>    
     </div>

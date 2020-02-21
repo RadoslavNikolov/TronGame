@@ -182,4 +182,12 @@ export default {
 
 <style scoped>
   .fade.show {opacity: 1}
+
+  body {
+    background-image: url('~@/assets/backgroud.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+  }
 </style>

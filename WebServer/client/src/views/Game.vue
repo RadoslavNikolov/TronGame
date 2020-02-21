@@ -11,22 +11,13 @@
                 </b-button-group>
             </div>
         </div>
-
-        
-        <!-- <h5>{{gameUid}}</h5>
-        <h5>{{playerNum}}</h5>
-        <h5>{{counter}}</h5>
-        <br> -->
+        <hr>
 
         <div class="d-flex justify-content-between" v-cloak>
-            <player-profile v-if="myself" :model="myself"></player-profile>
+            <player-profile v-if="myself" :class="myself ? 'me' : ''"  :model="myself"></player-profile>
+            <div><img src="~@/assets/navigation.png" style="max-width: 80px; height: auto"></div>
             <player-profile v-if="opponent" :model="opponent"></player-profile>
         </div>
-
-         <!-- <div class="d-flex justify-content-between">
-            <div>{{player1 ? player1.direction : ''}}</div>
-            <div>{{player2 ? player2.direction : ''}}</div>
-        </div> -->
 
         <div id="canvas-container">
             <canvas v-show="gameStarted" ref="my-canvas" id="myCanvas" :width="game.width" :height="game.height"></canvas>
@@ -311,7 +302,6 @@ export default {
             this.worker.postMessage('headToHeadCollisionCheck', [this.myself.points[0], this.opponent.points[0]])
             .then((result) => {
                 if(result){
-                    debugger
                     this.headToHeadCollisionDetected = true;
                     this.$mainHub.headToHeadCollision(this.gameUid);
                 }
@@ -432,7 +422,7 @@ export default {
     }
 
     #myCanvas {
-      border: 2px solid blue
+      border: 4px solid blue
     }
 
     #canvas-container {
