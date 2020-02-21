@@ -28,7 +28,7 @@ namespace Tron.Services.Models.GameEngine
             Random rnd = new Random();
             var direction = playerNum == 1 ? Direction.Down : Direction.Up;
             _direction = direction;
-           //_points.AddFirst(new Point { X = rnd.Next(20, (600 / _elementSize) - _elementSize), Y = rnd.Next(20, (500 / _elementSize) - _elementSize), Direction = direction, ElementSize = _elementSize });
+
            _points.AddFirst(new Point { X = playerNum == 1 ? 5 : 35, Y = playerNum == 1 ? 5 : 35 , Direction = direction, ElementSize = _elementSize });
             AddToTheTail();
             AddToTheTail();
@@ -38,7 +38,6 @@ namespace Tron.Services.Models.GameEngine
         /// Gets or sets the name of the player. This would be ser at the time user register to the gameHub.
         /// </summary>
         public string Name { get; set; }
-
 
         /// <summary>
         /// Gets or sets the opponent player. The player against whom the player would be playing.
@@ -53,6 +52,10 @@ namespace Tron.Services.Models.GameEngine
 
         public Direction Direction => _direction;
 
+        /// <summary>
+        /// Changes player direction
+        /// </summary>
+        /// <param name="direction">Pressed button diection</param>
         public void SetDirection(string direction)
         {
             lock (_myDirectionLock)
@@ -62,7 +65,6 @@ namespace Tron.Services.Models.GameEngine
                 {
                     case Direction.Up:
                     case Direction.Down:
-                        //Pressed button diection
                         switch (direction)
                         {
                             case "left":
@@ -79,7 +81,6 @@ namespace Tron.Services.Models.GameEngine
                         break;
                     case Direction.Right:
                     case Direction.Left:
-                        //Pressed button diection
                         switch (direction)
                         {
                             case "up":
@@ -100,15 +101,13 @@ namespace Tron.Services.Models.GameEngine
             }
         }
 
+        /// <summary>
+        /// Adds a point to the head of the player points
+        /// </summary>
         public void AddToTheHead()
         {
             lock (_myPointsLock)
             {
-                //if (_points.Count > 100)
-                //{
-                //    return;
-                //}
-
                 var first = _points.First;
                 Point point = new Point { Direction = _direction, ElementSize = _elementSize };
                 switch (point.Direction)

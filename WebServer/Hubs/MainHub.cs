@@ -29,20 +29,20 @@ namespace WebServer.Hubs
         // These methods will be called from the client
         public async Task GameTick(Guid gameUid)
         {
-            var game = GameState.Instance.Tick(gameUid);
+            var game = GameStateManager.Instance.Tick(gameUid);
             if (game != null)
             {
 
                 if (game.Player1?.OutOfTheBoundaries??false)
                 {
                     await _service.GameOverAsync(gameUid, game.Player2?.Name, game.Level * 10);
-                    await Clients.Group(gameUid.ToString()).GameOver(gameUid, game.Player2?.Name, game.Level * 10);
+                    await Clients.Group(gameUid.ToString()).GameOver(gameUid, game.Player2?.Name, game.Level * 10, "");
                 }
 
                 if (game.Player2?.OutOfTheBoundaries??false)
                 {
                      await _service.GameOverAsync(gameUid, game.Player1?.Name, game.Level * 10);
-                     await Clients.Group(gameUid.ToString()).GameOver(gameUid, game.Player1?.Name, game.Level * 10);
+                     await Clients.Group(gameUid.ToString()).GameOver(gameUid, game.Player1?.Name, game.Level * 10, "");
                 }
 
                 var p1 = game.Player1.ToShortModel();
@@ -66,14 +66,14 @@ namespace WebServer.Hubs
 
         public void PlayerMove(Guid gameUid, int playerNum, string direction)
         {
-            GameState.Instance.PlayerMove(gameUid, playerNum, direction);
+            GameStateManager.Instance.PlayerMove(gameUid, playerNum, direction);
         }
 
         public async Task GameJoin(Guid gameUid, string player, int playerNum)
         {
             GameManagementViewModel persGame = await _service.GetGameViewByUidAsync(gameUid);
 
-            var game = GameState.Instance.GameJoin(Context.ConnectionId, gameUid, player, playerNum, persGame);
+            var game = GameStateManager.Instance.GameJoin(Context.ConnectionId, gameUid, player, playerNum, persGame);
  
             await Groups.AddToGroupAsync(Context.ConnectionId, gameUid.ToString());
             await Clients.Group(gameUid.ToString()).GamePlayerJoin(gameUid, game?.Player1, game?.Player2);
@@ -86,12 +86,18 @@ namespace WebServer.Hubs
 
         public void OutOfTheBoundaries(Guid gameUid, string player, int playerNum)
         {
-            var game = GameState.Instance.OutOfTheBoundaries(gameUid, player, playerNum);
+            var game = GameStateManager.Instance.OutOfTheBoundaries(gameUid, player, playerNum);
+        }
+
+        public async Task HeadToHeadCollision(Guid gameUid)
+        {
+            await _service.GameOverAsync(gameUid, "", 0);
+             await Clients.Group(gameUid.ToString()).GameOver(gameUid, "", 0, "Head to Head collision detected. There is no winner!");
         }
 
         public async Task GameLeave(Guid gameUid, string player, int playerNum)
         {
-            var (isDeleted , game) = GameState.Instance.GameLeave(gameUid, player, playerNum);
+            var (isDeleted , game) = GameStateManager.Instance.GameLeave(gameUid, player, playerNum);
 
             if (!isDeleted)
             {

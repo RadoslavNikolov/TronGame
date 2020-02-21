@@ -10,6 +10,9 @@ using Tron.Services.Models;
 
 namespace Tron.Services
 {
+    /// <summary>
+    /// DB persistence service
+    /// </summary>
     public class GameService : BaseService, IGameService
     {
         public GameService(TronDbContext context) 
@@ -181,7 +184,7 @@ namespace Tron.Services
             }
 
             game.Finished = true;
-            var player = game.GamePlayer.FirstOrDefault(x => x.Name.Equals(winner, StringComparison.OrdinalIgnoreCase));
+            var player = game.GamePlayer.FirstOrDefault(x => !string.IsNullOrWhiteSpace(winner) && x.Name.Equals(winner, StringComparison.OrdinalIgnoreCase));
             if (player != null)
             {
                 player.IsWinner = true;

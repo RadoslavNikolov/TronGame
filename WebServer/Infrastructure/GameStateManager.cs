@@ -7,29 +7,38 @@ using Tron.Services.Models.GameEngine;
 
 namespace WebServer.Infrastructure
 {
-    public class GameState
+    /// <summary>
+    /// Singleton class responsible for the games
+    /// </summary>
+    public class GameStateManager
     {
-        private static readonly Lazy<GameState> _instance =
-            new Lazy<GameState>(() => new GameState(), true);
+        private static readonly Lazy<GameStateManager> _instance =
+            new Lazy<GameStateManager>(() => new GameStateManager(), true);
 
+        /// <summary>
+        /// Games store
+        /// </summary>
         private readonly ConcurrentDictionary<Guid, GameModel> games =
             new ConcurrentDictionary<Guid, GameModel>();
 
         private readonly object _myLock;
 
-        private GameState()
+        private GameStateManager()
         {
             _myLock = new object();
         }
 
-        public static GameState Instance => _instance.Value;
+        public static GameStateManager Instance => _instance.Value;
 
-
-        private void Remove<T>(ConcurrentBag<T> items, T itemToRemo)
-        {
-            items = new ConcurrentBag<T>(items?.Except(new[] { itemToRemo }));
-        }
-
+        /// <summary>
+        /// Jons player to a game
+        /// </summary>
+        /// <param name="connectionId">SignarR connection id</param>
+        /// <param name="gameUid">Uid of the game</param>
+        /// <param name="player"></param>
+        /// <param name="playerNum"></param>
+        /// <param name="persGame">Game stored in the DB with the givven game Uid</param>
+        /// <returns></returns>
         public GameModel GameJoin(string connectionId, Guid gameUid,
             string player, int playerNum, GameManagementViewModel persGame)
         {
@@ -68,6 +77,13 @@ namespace WebServer.Infrastructure
             return game;
         }
 
+        /// <summary>
+        /// Removes a player from a game
+        /// </summary>
+        /// <param name="gameUid">Uid of the game</param>
+        /// <param name="player"></param>
+        /// <param name="playerNum"></param>
+        /// <returns></returns>
         public (bool isDeleted, GameModel game) GameLeave(Guid gameUid, string player, int playerNum)
         {
             games.TryGetValue(gameUid, out GameModel game);
@@ -129,6 +145,13 @@ namespace WebServer.Infrastructure
             return game;
         }
 
+        /// <summary>
+        /// Marks a player when it goes out of the borad boundaries and signal the other player.
+        /// </summary>
+        /// <param name="gameUid"></param>
+        /// <param name="player"></param>
+        /// <param name="playerNum"></param>
+        /// <returns></returns>
         public GameModel OutOfTheBoundaries(Guid gameUid, string player, int playerNum)
         {
             games.TryGetValue(gameUid, out GameModel game);
