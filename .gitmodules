@@ -1,0 +1,3 @@
+[submodule "WebServer/WebServer/client"]
+	path = WebServer/WebServer/client
+	url = https://github.com/RadoslavNikolov/TronGame.git
